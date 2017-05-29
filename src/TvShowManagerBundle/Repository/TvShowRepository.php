@@ -15,16 +15,27 @@ class TvShowRepository extends \Doctrine\ORM\EntityRepository
      * @return array
      */
     public function myFindAll(){
+        // Ici l'alias 't' représente l'entité 'TvShow'
         $qb = $this->createQueryBuilder('t');
+        // On select toute l'entité, du coup, on récupérera tous les champs de l'entité TvShow
         $qb->select('t')
+            // On join l'entité episode, ce qui nous permet de récupérer tous les épisodes lié à nos TvShow
             ->join('t.episodes', 'e')
+            // On select également tous les épisodes de chaque TvShow
             ->addSelect('e');
-        return $qb->getQuery()->getResult();
+
+        // On consctruit la requête par rapport aux éléments défini en amont
+        $query = $qb->getQuery();
+
+        // Execution de la requête et récupuration des résultats
+        $result = $query->getResult();
+
+        // Renvoie des résultats
+        return $result;
     }
 
     /**
      * Get one TvShow by id and his episodes
-     * @param $id int
      * @return mixed
      */
     public function myFindOneById($id){
