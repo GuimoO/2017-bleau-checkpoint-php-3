@@ -35,17 +35,56 @@ class TvShowRepository extends \Doctrine\ORM\EntityRepository
     }
 
     /**
+     * @param $idTvShow int of TvShow
+     * @return array
+     * Get all episodes for one TvShow
+     */
+    public function getAllEpisodesForOneTvShow($idTvShow){
+        // Initialisation d'une requete qui n'est pas lié directement à l'entitée TvShow
+        $qb = $this->_em->createQueryBuilder();
+        $qb->select('e')
+            ->from('TvShowManagerBundle:Episode', 'e')
+            ->join('e.tvShow', 'tv')
+            ->where('tv.id = :idTvShow')
+            ->setParameter('idTvShow', $idTvShow);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @param $idTvShow
+     * @return mixed
+     * Get nb episode from one TvShow
+     * Cette fonction est utilisé dans la méthode myFindOneById ci dessous, et nous permet de vérifier qu'il y a
+     * au moin un épisode lié à l'objet TvShow ciblé
+     */
+    private function countEpisodeFromOneTvShow($idTvShow){
+        $qb = $this->createQueryBuilder('t');
+        $qb->where('t.id = :idTvShow')
+            ->join('t.episodes', 'e')
+            ->select('count(e.id) as nb')
+            ->setParameter('idTvShow', $idTvShow);
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    /**
      * Get one TvShow by id and his episodes
      * @return mixed
      */
     public function myFindOneById($id){
         $qb = $this->createQueryBuilder('t');
         $qb->select('t')
-            ->where('t.id = :id')
-            ->join('t.episodes', 'e')
-            ->addSelect('e')
-            ->setParameter('id', $id);
+            ->where('t.id = :id');
+
+        if ($this->countEpisodeFromOneTvShow($id) != 0){
+            $qb->join('t.episodes', 'e')
+                ->addSelect('e');
+        }
+
+        $qb->setParameter('id', $id);
 
         return $qb->getQuery()->getSingleResult();
     }
+
+
 }

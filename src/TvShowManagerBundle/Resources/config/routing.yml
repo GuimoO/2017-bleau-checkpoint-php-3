@@ -2,22 +2,12 @@ tv_show_manager_homepage:
     path:     /
     defaults: { _controller: TvShowManagerBundle:Default:index }
 
-add:
-    path:     /tvshow/add
-    defaults: { _controller: TvShowManagerBundle:TvShow:add }
+#Chargement des routes défini dans src/TvShowManagerBundle/Resources/config/routing/tvShow.yml en préfixant tous les path avec 'tvShow'
+tvShow_route:
+    prefix: /tvshow
+    resource: '@TvShowManagerBundle/Resources/config/routing/tvShow.yml'
 
-list:
-    path:     /tvshow
-    defaults: { _controller: TvShowManagerBundle:TvShow:list }
-
-edit:
-    path:     /tvshow/edit
-    defaults: { _controller: TvShowManagerBundle:TvShow:edit }
-
-delete:
-    path:     /tvshow/delete
-    defaults: { _controller: TvShowManagerBundle:TvShow:delete }
-
-show:
-    path:     /tvshow/{id}/show
-    defaults: { _controller: TvShowManagerBundle:TvShow:show }
+#Chargement des routes défini dans src/TvShowManagerBundle/Resources/config/routing/episode.yml en préfixant tous les path avec 'episode'
+episode_route:
+    prefix: /episode
+    resource: '@TvShowManagerBundle/Resources/config/routing/episode.yml'

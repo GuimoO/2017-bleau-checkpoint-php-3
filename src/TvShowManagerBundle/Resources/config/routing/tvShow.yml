@@ -1,0 +1,24 @@
+list:
+    path:     /
+    defaults: { _controller: TvShowManagerBundle:TvShow:list }
+
+add:
+    path:     /add
+    defaults: { _controller: TvShowManagerBundle:TvShow:add }
+edit:
+    path:     /edit
+    defaults: { _controller: TvShowManagerBundle:TvShow:edit }
+
+#Delete one TvShow
+tvShow_delete:
+    path:     /delete
+    defaults: { _controller: TvShowManagerBundle:TvShow:delete }
+
+#Delete all episode from one TvShow
+tvShow_delete_episodes:
+    path:     /{idTvShow}/deleteAll
+    defaults: { _controller: TvShowManagerBundle:TvShow:deleteAllEpisodes }
+
+show:
+    path:     /{id}/show
+    defaults: { _controller: TvShowManagerBundle:TvShow:show }

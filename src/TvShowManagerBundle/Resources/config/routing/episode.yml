@@ -1,0 +1,6 @@
+episode_delete:
+    path:     /{idTvShow}/delete/{id}
+    defaults: { _controller: TvShowManagerBundle:Episode:delete }
+    requirements:
+        id: '\d+'
+        idTvShow: '\d+'

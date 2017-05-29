@@ -10,4 +10,17 @@ namespace TvShowManagerBundle\Repository;
  */
 class EpisodeRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * @param $id int
+     * @return mixed
+     * Get one Episode by Id
+     */
+    public function myFindOneById($id){
+        $qb = $this->createQueryBuilder('e');
+        $qb->select('e')
+            ->where('e.id = :id')
+            ->setParameter('id', $id);
+
+        return $qb->getQuery()->getSingleResult();
+    }
 }

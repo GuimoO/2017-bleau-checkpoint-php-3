@@ -39,9 +39,10 @@ class TvShowController extends Controller
         // via la méthode myFindOneById() définit dans le répository (src/TvShowManagerBundle/Repository/TvShowRepository.php)
         $tvshow = $em->getRepository('TvShowManagerBundle:TvShow')->myFindOneById($id);
 
+
         // Renvoie de la vue show.html.twig avec la TvShow et ses épisodes
         return $this->render('TvShowManagerBundle:TvShow:show.html.twig', array(
-            'tvshow' => $tvshow
+            'tv' => $tvshow
         ));
     }
 
@@ -63,6 +64,25 @@ class TvShowController extends Controller
     {
         return $this->render('TvShowManagerBundle:TvShow:delete.html.twig', array(
             // ...
+        ));
+    }
+
+    /**
+     * @param $idTvShow int
+     * @return \Symfony\Component\HttpFoundation\Response
+     * Delete all episodes from One TvShow
+     */
+    public function deleteAllEpisodesAction($idTvShow){
+        $em = $this->getDoctrine()->getManager();
+        $episodes = $em->getRepository('TvShowManagerBundle:TvShow')->getAllEpisodesForOneTvShow($idTvShow);
+        foreach ($episodes as $episode){
+            $em->remove($episode);
+        }
+
+        $em->flush();
+
+        return $this->redirectToRoute('show', array(
+            'id' => $idTvShow
         ));
     }
 

@@ -11,7 +11,9 @@
 
             <h1>{{ tvshow.name }}</h1>
             {% for episode in tvshow.episodes %}
-                {{ episode.name }}
+                <ul>
+                    <li>{{ episode.name }}</li>
+                </ul>
             {% endfor %}
             <h2><a href="{{ path('show', { 'id': tvshow.id }) }}">voir</a></h2>
 
