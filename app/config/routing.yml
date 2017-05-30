@@ -1,6 +1,6 @@
 tv_show_manager:
     resource: "@TvShowManagerBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /plop
 
 subject:
     resource: "@SubjectBundle/Controller/"
