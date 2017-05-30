@@ -38,7 +38,7 @@ class AlgoController extends Controller
 
     /**
      * [dateInterval description]
-     * Renvoie la plus grande distance entre deux séries
+     * Renvoie la plus grande distance entre deux séries ==> ternaire
      * @param  array $series
      * @return integer
      */
